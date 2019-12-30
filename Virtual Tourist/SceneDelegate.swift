@@ -1,8 +1,8 @@
 //
 //  SceneDelegate.swift
-//  VirtualTourist
+//  Virtual Tourist
 //
-//  Created by 🍑 on 28/12/2019.
+//  Created by 🍑 on 31/12/2019.
 //  Copyright © 2019 udacity. All rights reserved.
 //
 

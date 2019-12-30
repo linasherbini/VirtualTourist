@@ -22,12 +22,12 @@ class VTClient {
         return URL(string: urlString)!
     }
     
-    class func getPhoto(lat: Double, long: Double, completion: @escaping ([GetPhoto],String?) -> Void) {
+    class func getPhoto(lat: Double, long: Double, page: Int, completion: @escaping ([URL?], Error?, String?) -> Void) {
         let request = URLRequest(url: createURL(lat, long))
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else {
                 DispatchQueue.main.async {
-                    completion([],error?.localizedDescription)
+                    completion([],error,error?.localizedDescription)
                 }
                 return
             }
@@ -38,13 +38,13 @@ class VTClient {
                 for photo in photos {
                     photosURL.append(photo.createImageURL())
                 }
-                let pages = response.photos.pages
-                page = Int.random(in: 1...pages)
+                /*let pages = response.photos.pages
+                page = Int.random(in: 1...pages)*/
                 DispatchQueue.main.async {
-                    completion(photos,"")
+                    completion(photosURL,nil,"")
                 }
             } catch {
-                completion([],error.localizedDescription)
+                completion([],error,error.localizedDescription)
                 print(error)
             }
         }

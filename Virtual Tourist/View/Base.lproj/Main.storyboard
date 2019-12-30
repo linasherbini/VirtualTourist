@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="UQW-rO-wi4">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--MapVC-->
+        <scene sceneID="QeM-Oo-RnJ">
+            <objects>
+                <viewController id="RcJ-mR-9pg" customClass="MapVC" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5GT-7Z-g91">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="mQ5-lM-DJf">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <gestureRecognizers/>
+                        <viewLayoutGuide key="safeArea" id="uNW-SM-mtB"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="5WA-0b-RJJ" appends="YES" id="UdI-Or-Vpm"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" id="trH-xq-9ec"/>
+                    <connections>
+                        <outlet property="mapView" destination="mQ5-lM-DJf" id="jFv-PD-Bhk"/>
+                        <segue destination="yYL-4I-i6S" kind="show" identifier="showPhotos" id="uyz-il-qAP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WkU-8N-fvr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="5WA-0b-RJJ">
+                    <connections>
+                        <action selector="newPin:" destination="RcJ-mR-9pg" id="gnI-Cf-FQP"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="2497.1014492753625" y="375.66964285714283"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ani-ZP-LZ2">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UQW-rO-wi4" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="n42-Bj-pOW">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="RcJ-mR-9pg" kind="relationship" relationship="rootViewController" id="rXq-Xz-kHm"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KqW-up-gxb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1586.9565217391305" y="375.66964285714283"/>
+        </scene>
+        <!--Photo AlbumVC-->
+        <scene sceneID="2Ww-P2-Gmd">
+            <objects>
+                <viewController id="yYL-4I-i6S" customClass="PhotoAlbumVC" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5j3-PN-QF1">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="k3U-wu-rUN">
+                                <rect key="frame" x="0.0" y="269" width="414" height="549"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="549" id="Hd2-h8-QmN"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LUO-Dc-h2t">
+                                    <size key="itemSize" width="84" height="84"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="iWI-qa-jUj" customClass="PhotoCollectionViewCell" customModule="Virtual_Tourist">
+                                        <rect key="frame" x="0.0" y="0.0" width="84" height="84"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Ecl-fg-5SU">
+                                            <rect key="frame" x="0.0" y="0.0" width="84" height="84"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="84" height="84"/>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I9w-Rp-uBv">
+                                <rect key="frame" x="0.0" y="818" width="414" height="49"/>
+                                <items>
+                                    <barButtonItem image="arrow.clockwise" catalog="system" id="BJ8-qP-AWf"/>
+                                </items>
+                            </toolbar>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fBl-7o-2Jr">
+                                <rect key="frame" x="0.0" y="88" width="414" height="181"/>
+                            </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CeB-Ez-b1y">
+                                <rect key="frame" x="207" y="447.5" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="k3U-wu-rUN" firstAttribute="leading" secondItem="I9w-Rp-uBv" secondAttribute="leading" id="3yV-gN-5MY"/>
+                            <constraint firstItem="k3U-wu-rUN" firstAttribute="top" secondItem="fBl-7o-2Jr" secondAttribute="bottom" id="4Ln-Vn-IaC"/>
+                            <constraint firstItem="fBl-7o-2Jr" firstAttribute="trailing" secondItem="mcO-3e-5Xs" secondAttribute="trailing" id="BL7-ss-fJL"/>
+                            <constraint firstItem="fBl-7o-2Jr" firstAttribute="top" secondItem="mcO-3e-5Xs" secondAttribute="top" id="HiK-JA-ceh"/>
+                            <constraint firstItem="k3U-wu-rUN" firstAttribute="leading" secondItem="fBl-7o-2Jr" secondAttribute="leading" id="JeF-gX-iWB"/>
+                            <constraint firstItem="k3U-wu-rUN" firstAttribute="trailing" secondItem="I9w-Rp-uBv" secondAttribute="trailing" id="OUB-10-iov"/>
+                            <constraint firstItem="I9w-Rp-uBv" firstAttribute="top" secondItem="k3U-wu-rUN" secondAttribute="bottom" id="UB5-3P-jZP"/>
+                            <constraint firstItem="fBl-7o-2Jr" firstAttribute="leading" secondItem="mcO-3e-5Xs" secondAttribute="leading" id="gPx-cH-y1b"/>
+                            <constraint firstItem="k3U-wu-rUN" firstAttribute="top" secondItem="5j3-PN-QF1" secondAttribute="top" constant="269" id="hiq-3z-AyO"/>
+                            <constraint firstItem="CeB-Ez-b1y" firstAttribute="centerY" secondItem="mcO-3e-5Xs" secondAttribute="centerY" constant="-27.5" id="uQs-FM-OdG"/>
+                            <constraint firstItem="CeB-Ez-b1y" firstAttribute="centerX" secondItem="mcO-3e-5Xs" secondAttribute="centerX" id="v4U-Gx-puS"/>
+                            <constraint firstItem="k3U-wu-rUN" firstAttribute="trailing" secondItem="fBl-7o-2Jr" secondAttribute="trailing" id="weP-p7-bZJ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="mcO-3e-5Xs"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="XGr-nG-Uqp"/>
+                    <connections>
+                        <outlet property="collectionView" destination="k3U-wu-rUN" id="ASf-uh-Ua3"/>
+                        <outlet property="flowLayout" destination="LUO-Dc-h2t" id="sBg-IU-QdY"/>
+                        <outlet property="mapView" destination="fBl-7o-2Jr" id="XzN-xg-HtJ"/>
+                        <outlet property="noImageLabel" destination="CeB-Ez-b1y" id="DwY-Vf-Usd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iga-Fd-QBB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3373.913043478261" y="375.66964285714283"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="arrow.clockwise" catalog="system" width="56" height="64"/>
+    </resources>
+</document>

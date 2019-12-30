@@ -48,7 +48,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
         do {
             try fetchedResultsController?.performFetch()
         } catch {
-            fatalError(error.localizedDescription)
+            showAlertMessage("Error", error.localizedDescription)
         }
     }
 
@@ -76,21 +76,37 @@ class MapVC: UIViewController, MKMapViewDelegate {
             let annotation = MKPointAnnotation()
             annotation.coordinate = pin.coordinate
             mapView.addAnnotation(annotation)
-            try? DataController.viewContext.save()
-            
+            do {
+                try DataController.viewContext.save()
+            } catch {
+                showAlertMessage("Error", error.localizedDescription)
+            }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showPhotos" {
+            let photoAlbumVC = segue.destination as! PhotoAlbumVC
+            photoAlbumVC.pin = sender as! Pin
         }
     }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation else {
             return
         }
+        
         if editingMode {
             let pin = (fetchedResultsController?.fetchedObjects?.first(where: {$0.latitude == annotation.coordinate.latitude && $0.longitude == annotation.coordinate.longitude}))!
             self.mapView.removeAnnotation(annotation)
             DataController.deletePin(pin)
-            try? DataController.viewContext.save()
+            do {
+                try DataController.viewContext.save()
+            } catch {
+                showAlertMessage("Error", error.localizedDescription)
+            }
         } else {
-            print("prepare for segue")
+            let pin = (fetchedResultsController?.fetchedObjects?.first(where: {$0.latitude == annotation.coordinate.latitude && $0.longitude == annotation.coordinate.longitude}))! 
+            performSegue(withIdentifier: "showPhotos", sender: pin)
         }
         
     }
@@ -109,5 +125,13 @@ class MapVC: UIViewController, MKMapViewDelegate {
         }
         return pinView
     }
+    
+    func showAlertMessage(_ title: String, _ message: String) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
 }
-

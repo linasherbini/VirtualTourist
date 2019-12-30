@@ -20,7 +20,7 @@ class DataController {
         return persistentContainer.viewContext
     }
     
-    static let persistentContainer = NSPersistentContainer(name: "VirtualTourist")
+    static let persistentContainer = NSPersistentContainer(name: "Virtual_Tourist")
     
     static func load(completion: (() -> Void)? = nil){
         persistentContainer.loadPersistentStores { (storeDescription, error) in
