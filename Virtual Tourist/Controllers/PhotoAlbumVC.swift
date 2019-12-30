@@ -81,6 +81,14 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! PhotoCollectionViewCell
+        cell.imageCell.image = nil
+        
+        let image = fetchedResultsController?.object(at: indexPath)
+        if let imageData = image?.imageData {
+            DispatchQueue.main.async {
+                cell.imageCell.image = UIImage(data: imageData)
+            }
+        }
         return cell
     }
     
