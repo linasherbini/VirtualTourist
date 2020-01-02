@@ -17,29 +17,25 @@ class MapVC: UIViewController, MKMapViewDelegate {
     var dataController: DataController!
     var annotation: MKPointAnnotation!
     var editingMode: Bool!
+    
+    //MARK:- Outlets
     @IBOutlet weak var mapView: MKMapView!
     
+    //MARK:- Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.delegate = self
         setupFetchedResultsController()
         setAnnotations()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(pinDeletion))
+        defaultNavigationItem()
         editingMode = false
     }
     
-    @objc func pinDeletion() {
-        if !editingMode {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneDeleting))
-            editingMode = true
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        defaultNavigationItem()
     }
     
-    @objc func doneDeleting() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(pinDeletion))
-        editingMode = false
-    }
-
+    //MARK:- Core Data functions
     fileprivate func setupFetchedResultsController() {
         let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
@@ -48,13 +44,34 @@ class MapVC: UIViewController, MKMapViewDelegate {
         do {
             try fetchedResultsController?.performFetch()
         } catch {
-            showAlertMessage("Error", error.localizedDescription)
+            self.showAlertMessage("Error", error.localizedDescription)
         }
     }
 
+    //MARK:- UI Configuration functions
+    fileprivate func defaultNavigationItem() {
+           self.navigationItem.title = "Tap & hold to drop 📍"
+           navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(pinDeletion))
+       }
+    
+    @objc func pinDeletion() {
+        if !editingMode {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneDeleting))
+            self.navigationItem.title = "Tap 📍 to delete"
+            editingMode = true
+        }
+    }
+    
+    @objc func doneDeleting() {
+        defaultNavigationItem()
+        editingMode = false
+    }
+
+    //MARK:- Map pins configurations & Map view delegates
     func setAnnotations() {
         var annotations = [MKPointAnnotation]()
-        for pin in fetchedResultsController?.fetchedObjects ?? [] {
+        let pins = DataController.getPins()
+        for pin in pins {
             let lat = CLLocationDegrees(pin.latitude)
             let long = CLLocationDegrees(pin.longitude)
             let coordination = CLLocationCoordinate2D(latitude: lat, longitude: long)
@@ -64,51 +81,22 @@ class MapVC: UIViewController, MKMapViewDelegate {
         }
         mapView.showAnnotations(annotations, animated: true)
     }
-    
-    @IBAction func newPin(_ sender: UILongPressGestureRecognizer) {
-        if sender.state == .began {
-            let pin = Pin(context: DataController.viewContext)
-            let location = sender.location(in: self.mapView)
-            let coordinations = mapView.convert(location, toCoordinateFrom: mapView)
-            pin.latitude = coordinations.latitude
-            pin.longitude = coordinations.longitude
-            pins.append(pin)
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = pin.coordinate
-            mapView.addAnnotation(annotation)
-            do {
-                try DataController.viewContext.save()
-            } catch {
-                showAlertMessage("Error", error.localizedDescription)
-            }
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showPhotos" {
-            let photoAlbumVC = segue.destination as! PhotoAlbumVC
-            photoAlbumVC.pin = sender as! Pin
-        }
-    }
+    //Will delete pins if editing is enabled, and will transition to photo album view if editing is disabled
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation else {
             return
         }
-        
         if editingMode {
             let pin = (fetchedResultsController?.fetchedObjects?.first(where: {$0.latitude == annotation.coordinate.latitude && $0.longitude == annotation.coordinate.longitude}))!
             self.mapView.removeAnnotation(annotation)
             DataController.deletePin(pin)
-            do {
-                try DataController.viewContext.save()
-            } catch {
-                showAlertMessage("Error", error.localizedDescription)
-            }
-        } else {
-            let pin = (fetchedResultsController?.fetchedObjects?.first(where: {$0.latitude == annotation.coordinate.latitude && $0.longitude == annotation.coordinate.longitude}))! 
+            try? DataController.viewContext.save()
+        }
+        if !editingMode {
+            let pin = DataController.getPins().first(where: {$0.latitude == annotation.coordinate.latitude && $0.longitude == annotation.coordinate.longitude})
+            navigationItem.title = "🌏"
             performSegue(withIdentifier: "showPhotos", sender: pin)
         }
-        
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -126,12 +114,23 @@ class MapVC: UIViewController, MKMapViewDelegate {
         return pinView
     }
     
-    func showAlertMessage(_ title: String, _ message: String) {
-        DispatchQueue.main.async {
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+    @IBAction func newPin(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let location = sender.location(in: self.mapView)
+            let coordinations = mapView.convert(location, toCoordinateFrom: mapView)
+            let pin = DataController.savePin(longitude: coordinations.longitude, latitude: coordinations.latitude)
+            pins.append(pin)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = pin.coordinate
+            mapView.addAnnotation(annotation)
+            DataController.saveContext()
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showPhotos" {
+            let photoAlbumVC = segue.destination as! PhotoAlbumVC
+            photoAlbumVC.pin = sender as! Pin
+        }
+    }
 }

@@ -2,13 +2,12 @@
 //  Pin+Extension.swift
 //  VirtualTourist
 //
-//  Created by 🍑 on 20/12/2019.
+//  Created by 🍑 on 10/12/2019.
 //  Copyright © 2019 udacity. All rights reserved.
 //
 
 import Foundation
 import MapKit
-
 
 extension Pin {
     

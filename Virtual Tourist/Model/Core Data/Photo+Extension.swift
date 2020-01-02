@@ -2,7 +2,7 @@
 //  Photo+Extension.swift
 //  VirtualTourist
 //
-//  Created by 🍑 on 28/12/2019.
+//  Created by 🍑 on 10/12/2019.
 //  Copyright © 2019 udacity. All rights reserved.
 //
 
@@ -15,4 +15,11 @@ extension Photo {
         creationDate = Date()
     }
     
+    func fetchImage() -> UIImage? {
+        if imageData == nil {
+            return nil
+        } else {
+            return UIImage(data: imageData!)
+        }
+    }
 }

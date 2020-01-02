@@ -31,9 +31,30 @@ class DataController {
             completion?()
         }
     }
-    
+    static func getPins()->[Pin]{
+        var pins=[Pin]()
+        let fetchRequest=NSFetchRequest<Pin>(entityName: "Pin")
+        do {
+            pins = try viewContext.fetch(fetchRequest)
+        } catch {
+            let nserror = error as NSError
+            fatalError("failed to fetch pins \(nserror), \(nserror.userInfo)")
+        }
+        return pins
+    }
+    static func savePin(longitude:Double ,latitude:Double) -> Pin {
+        let entity = NSEntityDescription.entity(forEntityName: "Pin", in: viewContext)!
+        let pin = Pin(entity: entity, insertInto: viewContext)
+        pin.setValuesForKeys(["latitude": latitude,
+                              "longitude":longitude])
+        saveContext()
+        return pin
+    }
     static func deletePin(_ pin: Pin){
         viewContext.delete(pin)
+    }
+    static func deletePhoto(_ photo: Photo){
+        viewContext.delete(photo)
     }
     
 }
