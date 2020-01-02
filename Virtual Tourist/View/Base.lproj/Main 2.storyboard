@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="UQW-rO-wi4">
-    <device id="retina6_5" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -15,8 +15,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="mQ5-lM-DJf">
-                                <rect key="frame" x="-44" y="88" width="502" height="808"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="mQ5-lM-DJf">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="RcJ-mR-9pg" id="zhg-jO-dmV"/>
                                 </connections>
@@ -24,12 +25,6 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="mQ5-lM-DJf" firstAttribute="trailing" secondItem="uNW-SM-mtB" secondAttribute="trailing" constant="44" id="0dK-jz-0d7"/>
-                            <constraint firstAttribute="bottom" secondItem="mQ5-lM-DJf" secondAttribute="bottom" id="Cfa-86-UW7"/>
-                            <constraint firstItem="mQ5-lM-DJf" firstAttribute="leading" secondItem="uNW-SM-mtB" secondAttribute="leading" constant="-44" id="IsO-b1-Omz"/>
-                            <constraint firstItem="mQ5-lM-DJf" firstAttribute="top" secondItem="uNW-SM-mtB" secondAttribute="top" id="btd-Hs-JGZ"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="uNW-SM-mtB"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="5WA-0b-RJJ" appends="YES" id="UdI-Or-Vpm"/>
@@ -48,7 +43,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2497.0982142857142" y="375.36231884057975"/>
+            <point key="canvasLocation" x="2497.1014492753625" y="375.66964285714283"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ani-ZP-LZ2">
@@ -76,8 +71,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Gwd-Rv-OV7">
+                                <rect key="frame" x="0.0" y="88" width="414" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="Wqm-Sf-UUv"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="0kG-P2-faS" id="Uk2-68-O6y"/>
+                                </connections>
+                            </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4QF-lw-4UT">
-                                <rect key="frame" x="0.0" y="288" width="414" height="574"/>
+                                <rect key="frame" x="0.0" y="278" width="414" height="530"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="DK9-E4-tww">
                                     <size key="itemSize" width="120" height="120"/>
@@ -115,8 +119,9 @@
                                     <outlet property="delegate" destination="0kG-P2-faS" id="wYG-As-spi"/>
                                 </connections>
                             </collectionView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SwL-AG-bqb">
-                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SwL-AG-bqb">
+                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hvq-mF-xUZ"/>
                                     <barButtonItem image="arrow.clockwise" catalog="system" id="f1a-U1-ABX">
@@ -128,35 +133,23 @@
                                 </items>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bbS-oS-t1v">
-                                <rect key="frame" x="207" y="575" width="0.0" height="0.0"/>
+                                <rect key="frame" x="207" y="543" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Gwd-Rv-OV7">
-                                <rect key="frame" x="0.0" y="88" width="414" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="7IB-cN-tOs"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="delegate" destination="0kG-P2-faS" id="Uk2-68-O6y"/>
-                                </connections>
-                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="SwL-AG-bqb" firstAttribute="bottom" secondItem="4QF-lw-4UT" secondAttribute="bottom" id="2YJ-r7-czN"/>
-                            <constraint firstItem="Gwd-Rv-OV7" firstAttribute="leading" secondItem="P5E-xK-iZ2" secondAttribute="leading" id="9SF-ck-451"/>
-                            <constraint firstItem="4QF-lw-4UT" firstAttribute="top" secondItem="P5E-xK-iZ2" secondAttribute="top" constant="200" id="Awb-KT-2tF"/>
-                            <constraint firstItem="Gwd-Rv-OV7" firstAttribute="trailing" secondItem="4QF-lw-4UT" secondAttribute="trailing" id="Cgg-gb-Ggg"/>
-                            <constraint firstItem="SwL-AG-bqb" firstAttribute="trailing" secondItem="4QF-lw-4UT" secondAttribute="trailing" id="DuQ-gi-U12"/>
-                            <constraint firstItem="Gwd-Rv-OV7" firstAttribute="top" secondItem="P5E-xK-iZ2" secondAttribute="top" id="F8z-c2-ck5"/>
-                            <constraint firstItem="Gwd-Rv-OV7" firstAttribute="leading" secondItem="4QF-lw-4UT" secondAttribute="leading" id="OdX-Dk-6Q9"/>
-                            <constraint firstItem="SwL-AG-bqb" firstAttribute="leading" secondItem="4QF-lw-4UT" secondAttribute="leading" id="XxU-ZO-O4r"/>
-                            <constraint firstItem="P5E-xK-iZ2" firstAttribute="trailing" secondItem="Gwd-Rv-OV7" secondAttribute="trailing" id="ZlS-3D-GZ5"/>
-                            <constraint firstItem="bbS-oS-t1v" firstAttribute="centerY" secondItem="4QF-lw-4UT" secondAttribute="centerY" id="dRQ-Mp-jWc"/>
-                            <constraint firstItem="P5E-xK-iZ2" firstAttribute="bottom" secondItem="SwL-AG-bqb" secondAttribute="bottom" id="m8d-Zh-70n"/>
-                            <constraint firstItem="bbS-oS-t1v" firstAttribute="centerX" secondItem="4QF-lw-4UT" secondAttribute="centerX" id="qdS-3i-kNP"/>
+                            <constraint firstAttribute="trailing" secondItem="Gwd-Rv-OV7" secondAttribute="trailing" id="7u2-A6-qe1"/>
+                            <constraint firstAttribute="bottom" secondItem="4QF-lw-4UT" secondAttribute="bottom" constant="88" id="Bl1-Rb-tLl"/>
+                            <constraint firstItem="bbS-oS-t1v" firstAttribute="centerX" secondItem="4QF-lw-4UT" secondAttribute="centerX" id="Jdm-Dx-XmU"/>
+                            <constraint firstItem="Gwd-Rv-OV7" firstAttribute="leading" secondItem="4QF-lw-4UT" secondAttribute="leading" id="Mry-Ak-TL3"/>
+                            <constraint firstItem="bbS-oS-t1v" firstAttribute="centerY" secondItem="4QF-lw-4UT" secondAttribute="centerY" id="Q62-wS-SUg"/>
+                            <constraint firstItem="Gwd-Rv-OV7" firstAttribute="leading" secondItem="FEw-G4-i6n" secondAttribute="leading" id="eUV-JA-fny"/>
+                            <constraint firstItem="4QF-lw-4UT" firstAttribute="top" secondItem="P5E-xK-iZ2" secondAttribute="top" constant="190" id="owV-62-Ald"/>
+                            <constraint firstItem="Gwd-Rv-OV7" firstAttribute="trailing" secondItem="4QF-lw-4UT" secondAttribute="trailing" id="sKY-cB-ngZ"/>
+                            <constraint firstItem="Gwd-Rv-OV7" firstAttribute="top" secondItem="P5E-xK-iZ2" secondAttribute="top" id="v69-Em-rp8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="P5E-xK-iZ2"/>
                     </view>
